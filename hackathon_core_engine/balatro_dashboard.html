@@ -3,29 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SynchroAPI • Balatro Edition (Meta Global AI Hackathon)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  <title>SynchroAPI • Autonomous Cross-Repo CI/CD Orchestrator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --felt-dark: #1b4337;
-      --felt-mid: #255949;
-      --felt-light: #2e6b58;
-      --hud-bg: #293135;
-      --hud-inset: #1c2225;
-      --gold-border: #b88b3a;
-      --gold-text: #f3b958;
-      --chip-blue: #009dff;
-      --mult-red: #fe4c40;
-      --btn-red: #f85a4e;
-      --btn-orange: #f49d27;
-      --btn-purple: #6b6ee2;
-      --modal-bg: #455257;
-      --card-white: #f8f9fa;
+      --bg-teal-dark: #1d3c34;
+      --bg-teal-mid: #285247;
+      --bg-teal-light: #326457;
+      --slate-panel: #455257;
+      --slate-dark: #2b3337;
+      --slate-inset: #1e2427;
+      --slate-row: #364146;
+      --border-light: #b8c4c8;
+      --border-gold: #b88b3a;
+      --accent-blue: #009dff;
+      --accent-red: #fe5f55;
+      --accent-orange: #f3a833;
+      --accent-purple: #6b6ee2;
+      --accent-green: #2ecc71;
+      --text-gold: #f3b958;
     }
 
     * {
       box-sizing: border-box;
-      user-select: none;
     }
 
     body {
@@ -36,72 +36,71 @@
       overflow: hidden;
       font-family: 'Silkscreen', monospace;
       color: #ffffff;
-      background:
-        radial-gradient(circle at 60% 45%, var(--felt-light) 0%, var(--felt-mid) 45%, var(--felt-dark) 100%);
+      background: radial-gradient(circle at 60% 45%, var(--bg-teal-light) 0%, var(--bg-teal-mid) 50%, var(--bg-teal-dark) 100%);
       display: flex;
-      position: relative;
     }
 
-    /* CRT Scanline & Swirl Overlay */
+    /* Subtle Retro CRT Scanlines */
     body::after {
       content: "";
       position: fixed;
       inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.14) 0px,
-          rgba(0, 0, 0, 0.14) 2px,
-          transparent 2px,
-          transparent 4px
-        );
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.12) 0px,
+        rgba(0, 0, 0, 0.12) 2px,
+        transparent 2px,
+        transparent 4px
+      );
       pointer-events: none;
       z-index: 100;
     }
 
-    /* ================= LEFT HUD SIDEBAR ================= */
-    .hud-sidebar {
-      width: 340px;
+    /* ================= LEFT ENGINEERING SIDEBAR ================= */
+    .sidebar {
+      width: 350px;
       height: 100vh;
-      background: var(--hud-bg);
-      border-right: 5px solid var(--gold-border);
-      border-left: 5px solid var(--gold-border);
-      margin-left: 28px;
+      background: var(--slate-dark);
+      border-right: 4px solid var(--border-gold);
+      border-left: 4px solid var(--border-gold);
+      margin-left: 24px;
       padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: 6px 0 24px rgba(0,0,0,0.55);
+      box-shadow: 6px 0 24px rgba(0,0,0,0.5);
       z-index: 10;
     }
 
-    .blind-box {
+    .trigger-card {
       background: #473923;
-      border: 3px solid var(--gold-border);
+      border: 3px solid var(--border-gold);
       border-radius: 12px;
-      padding: 8px 10px;
+      padding: 10px;
+      box-shadow: 0 5px 0 #14191b;
     }
 
-    .blind-header {
+    .trigger-header {
       background: #a4792b;
       border-radius: 8px;
       text-align: center;
-      padding: 6px;
-      font-size: 18px;
+      padding: 7px;
+      font-size: 14px;
       font-weight: 700;
       text-shadow: 2px 2px 0 #000;
       margin-bottom: 10px;
+      box-shadow: 0 3px 0 #5e4211;
     }
 
-    .blind-body {
+    .trigger-body {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .blind-chip {
-      width: 74px;
-      height: 74px;
+    .pr-badge {
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       background: #d89f3c;
       border: 4px dashed #7a5214;
@@ -109,636 +108,398 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #2b1d05;
       box-shadow: 0 4px 0 #000;
       flex-shrink: 0;
     }
 
-    .blind-target {
-      background: var(--hud-inset);
+    .trigger-meta {
+      background: var(--slate-inset);
       border-radius: 8px;
       padding: 8px;
       flex: 1;
       text-align: center;
     }
 
-    .blind-target .label {
-      font-size: 10px;
+    .trigger-meta .lbl {
+      font-size: 9px;
       color: #b7c2c7;
     }
 
-    .blind-target .score-req {
-      font-size: 19px;
-      color: var(--mult-red);
+    .trigger-meta .val {
+      font-size: 15px;
+      color: var(--accent-red);
       font-weight: 700;
       margin: 4px 0;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .blind-target .reward {
-      font-size: 11px;
-      color: var(--gold-text);
+    .trigger-meta .sub {
+      font-size: 10px;
+      color: var(--text-gold);
     }
 
-    .round-score-box {
-      background: var(--hud-inset);
+    .metric-strip {
+      background: var(--slate-inset);
       border-radius: 10px;
-      padding: 8px 12px;
+      padding: 9px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border: 2px solid #394449;
+      box-shadow: 0 4px 0 #121618;
     }
 
-    .round-score-box .lbl {
-      font-size: 12px;
-      line-height: 1.2;
+    .metric-strip .lbl {
+      font-size: 11px;
+      line-height: 1.25;
     }
 
-    .round-score-box .val {
-      font-size: 24px;
+    .metric-strip .val {
+      font-size: 20px;
       font-weight: 700;
+      color: var(--accent-green);
       text-shadow: 2px 2px 0 #000;
     }
 
-    /* Hand Type + Blue Chips X Red Mult */
-    .hand-calc-box {
-      background: var(--hud-inset);
+    .engine-ratio-box {
+      background: var(--slate-inset);
       border-radius: 12px;
       padding: 12px 10px;
       text-align: center;
       border: 2px solid #394449;
+      box-shadow: 0 4px 0 #121618;
     }
 
-    .hand-name {
-      font-size: 16px;
+    .engine-title {
+      font-size: 13px;
       margin-bottom: 10px;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .hand-name span {
-      font-size: 12px;
-      color: var(--chip-blue);
+    .engine-title span {
+      font-size: 11px;
+      color: var(--accent-blue);
     }
 
-    .chips-mult-row {
+    .dual-pills {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
     }
 
-    .chips-pill {
-      background: var(--chip-blue);
+    .pill-blue {
+      background: var(--accent-blue);
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 10px;
       flex: 1;
-      text-align: right;
-      font-size: 26px;
+      text-align: center;
+      font-size: 18px;
       font-weight: 700;
       box-shadow: 0 4px 0 #005c99;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .mult-x {
-      font-size: 24px;
-      color: var(--mult-red);
+    .pill-sep {
+      font-size: 20px;
+      color: var(--accent-red);
       font-weight: 700;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .mult-pill {
-      background: var(--mult-red);
+    .pill-red {
+      background: var(--accent-red);
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 10px;
       flex: 1;
-      text-align: left;
-      font-size: 26px;
+      text-align: center;
+      font-size: 18px;
       font-weight: 700;
       box-shadow: 0 4px 0 #991f17;
       text-shadow: 2px 2px 0 #000;
     }
 
-    /* Bottom Grid of Sidebar */
-    .hud-grid {
+    .sidebar-bottom-grid {
       display: grid;
-      grid-template-columns: 95px 1fr;
+      grid-template-columns: 100px 1fr;
       gap: 10px;
       flex: 1;
     }
 
-    .hud-left-btns {
+    .side-actions {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .balatro-side-btn {
+    .tactile-btn {
       flex: 1;
       border: none;
       border-radius: 10px;
       font-family: 'Silkscreen', monospace;
       color: #fff;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       text-shadow: 2px 2px 0 #000;
       transition: transform 0.1s;
     }
 
-    .balatro-side-btn:active {
+    .tactile-btn:active {
       transform: translateY(3px);
     }
 
-    .btn-run-info {
-      background: var(--btn-red);
+    .btn-coral {
+      background: var(--accent-red);
       box-shadow: 0 5px 0 #9e2a22;
     }
 
-    .btn-options {
-      background: var(--btn-orange);
+    .btn-amber {
+      background: var(--accent-orange);
       box-shadow: 0 5px 0 #9c5d0b;
     }
 
-    .hud-stats-col {
+    .telemetry-cells {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .stat-pair {
+    .cell-pair {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
 
-    .stat-cell {
-      background: var(--hud-inset);
+    .stat-box {
+      background: var(--slate-inset);
       border-radius: 8px;
       padding: 6px;
       text-align: center;
       border: 2px solid #394449;
     }
 
-    .stat-cell .s-lbl {
-      font-size: 10px;
+    .stat-box .s-lbl {
+      font-size: 9px;
       color: #c2cdd2;
     }
 
-    .stat-cell .s-val {
-      font-size: 21px;
+    .stat-box .s-val {
+      font-size: 18px;
       font-weight: 700;
-      margin-top: 2px;
+      margin-top: 3px;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .blue-txt { color: var(--chip-blue); }
-    .red-txt { color: var(--mult-red); }
-    .gold-txt { color: var(--gold-text); }
-
-    .money-cell {
-      background: var(--hud-inset);
+    .loc-banner {
+      background: var(--slate-inset);
       border-radius: 10px;
-      padding: 10px;
+      padding: 9px;
       text-align: center;
-      font-size: 26px;
+      font-size: 18px;
       font-weight: 700;
-      color: var(--gold-text);
+      color: var(--text-gold);
       border: 2px solid #394449;
       text-shadow: 2px 2px 0 #000;
     }
 
-    /* ================= MAIN TABLE AREA ================= */
-    .table-area {
+    /* ================= MAIN WORKSPACE ================= */
+    .workspace {
       flex: 1;
       height: 100vh;
-      padding: 18px 34px;
+      padding: 18px 28px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-
-    /* Top Row: Jokers + Consumables */
-    .top-cards-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-    }
-
-    .joker-tray {
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 14px;
-      padding: 10px 16px;
-      display: flex;
       gap: 14px;
-      position: relative;
     }
 
-    .tray-counter {
-      position: absolute;
-      bottom: -20px;
-      left: 12px;
-      font-size: 12px;
-      color: #d0e1d9;
+    /* Top Model & Architecture Status Cards */
+    .top-modules-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.24);
+      padding: 10px 14px;
+      border-radius: 14px;
     }
 
-    .joker-card {
-      width: 118px;
-      height: 162px;
-      background: var(--card-white);
-      border-radius: 10px;
+    .module-card {
+      background: #f8f9fa;
       border: 3px solid #1e2427;
-      box-shadow: 4px 6px 0 rgba(0,0,0,0.45);
+      border-radius: 10px;
       padding: 6px;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.45);
+      color: #1e2427;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      color: #1e2427;
-      cursor: pointer;
-      transition: transform 0.18s ease;
-      animation: floatCard 3.2s ease-in-out infinite;
     }
 
-    .joker-card:nth-child(2) { animation-delay: 0.4s; }
-    .joker-card:nth-child(3) { animation-delay: 0.8s; }
-    .joker-card:nth-child(4) { animation-delay: 1.2s; }
-    .joker-card:nth-child(5) { animation-delay: 1.6s; }
-
-    .joker-card:hover {
-      transform: translateY(-12px) rotate(-2deg) scale(1.06);
-    }
-
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0px) rotate(-1deg); }
-      50% { transform: translateY(-5px) rotate(1.5deg); }
-    }
-
-    .joker-top {
-      font-size: 10px;
+    .module-card .m-head {
+      font-size: 9px;
       font-weight: 700;
       display: flex;
       justify-content: space-between;
     }
 
-    .joker-art {
-      flex: 1;
+    .module-card .m-Core {
       margin: 4px 0;
       border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      padding: 8px 6px;
+      color: #fff;
       text-align: center;
-      padding: 6px;
-      color: #fff;
-      text-shadow: 1px 1px 0 #000;
       font-size: 11px;
+      text-shadow: 1px 1px 0 #000;
     }
 
-    .joker-art .icon {
-      font-size: 28px;
-      margin-bottom: 4px;
-    }
-
-    .joker-badge {
-      font-size: 9px;
+    .module-card .m-foot {
       background: #1e2427;
-      color: #fff;
+      color: var(--text-gold);
+      font-size: 9px;
       text-align: center;
       padding: 3px;
       border-radius: 4px;
     }
 
-    /* Center Stage: Playing Hand OR Blind Selection */
-    .center-stage {
+    /* Main Slate Window (Balatro Modal Style) */
+    .slate-window {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .stage-banner {
-      background: rgba(0, 0, 0, 0.38);
-      border: 2px solid var(--gold-border);
-      border-radius: 10px;
-      padding: 8px 20px;
-      margin-bottom: 18px;
-      font-size: 14px;
-      color: var(--gold-text);
-      text-shadow: 2px 2px 0 #000;
-    }
-
-    .playing-hand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: -10px;
-      padding: 15px 0;
-    }
-
-    .playing-card {
-      width: 132px;
-      height: 188px;
-      background: #ffffff;
-      border-radius: 11px;
-      border: 3px solid #1e2427;
-      box-shadow: 5px 8px 0 rgba(0,0,0,0.5);
-      padding: 8px;
-      color: #1e2427;
+      background: var(--slate-panel);
+      border: 4px solid var(--border-light);
+      border-radius: 16px;
+      padding: 16px 22px;
+      box-shadow: 0 10px 0 rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin: 0 -6px;
-      cursor: pointer;
-      transition: transform 0.16s ease;
-      position: relative;
     }
 
-    .playing-card.selected {
-      transform: translateY(-22px);
-      border-color: var(--chip-blue);
-    }
-
-    .playing-card:hover {
-      transform: translateY(-28px) scale(1.05);
-      z-index: 20;
-    }
-
-    .card-corner {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .suit-spade, .suit-club { color: #1d2630; }
-    .suit-heart, .suit-diamond { color: #e53935; }
-
-    .card-center-node {
-      background: #eef2f5;
-      border: 2px solid #cfd8dc;
-      border-radius: 7px;
-      padding: 8px 5px;
-      text-align: center;
-      flex: 1;
-      margin: 6px 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .node-hop {
-      font-size: 9px;
-      color: #fff;
-      background: var(--chip-blue);
-      border-radius: 4px;
-      padding: 2px 4px;
-      margin-bottom: 5px;
-      display: inline-block;
-    }
-
-    .node-title {
-      font-size: 10px;
-      font-weight: 700;
-      word-break: break-word;
-      color: #1c2225;
-    }
-
-    .node-repo {
-      font-size: 8px;
-      color: #607d8b;
-      margin-top: 4px;
-    }
-
-    .score-popup {
-      position: absolute;
-      top: -34px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--chip-blue);
-      color: #fff;
-      font-size: 12px;
-      padding: 4px 8px;
-      border-radius: 6px;
-      box-shadow: 0 3px 0 #000;
-      white-space: nowrap;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .playing-card.scored .score-popup {
-      opacity: 1;
-    }
-
-    /* Bottom Action Bar */
-    .bottom-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      position: relative;
-      padding-bottom: 6px;
-    }
-
-    .action-btn {
-      border: none;
-      border-radius: 10px;
-      padding: 14px 26px;
-      font-family: 'Silkscreen', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      text-shadow: 2px 2px 0 #000;
-    }
-
-    .btn-play {
-      background: var(--chip-blue);
-      box-shadow: 0 5px 0 #005b94;
-    }
-
-    .btn-discard {
-      background: var(--mult-red);
-      box-shadow: 0 5px 0 #9c2219;
-    }
-
-    .sort-box {
-      border: 3px solid #ffffff;
-      background: rgba(0,0,0,0.35);
-      border-radius: 10px;
-      padding: 6px 12px;
-      text-align: center;
-    }
-
-    .sort-box .s-title {
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
-
-    .sort-sub-btns {
-      display: flex;
-      gap: 6px;
-    }
-
-    .sort-sub {
-      background: var(--btn-orange);
-      border: none;
-      border-radius: 6px;
-      padding: 5px 10px;
-      color: #fff;
-      font-family: 'Silkscreen', monospace;
-      font-size: 11px;
-      cursor: pointer;
-      box-shadow: 0 3px 0 #9c5d0b;
-    }
-
-    /* Deck Stack Bottom Right */
-    .deck-stack {
-      position: absolute;
-      right: 10px;
-      bottom: 8px;
-      text-align: center;
-    }
-
-    .deck-card {
-      width: 96px;
-      height: 134px;
-      background: #fff;
-      border: 3px solid #1e2427;
-      border-radius: 9px;
-      padding: 6px;
-      box-shadow: -4px 4px 0 #cfd8dc, -8px 8px 0 rgba(0,0,0,0.45);
-    }
-
-    .deck-back {
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        45deg,
-        #0077c8,
-        #0077c8 6px,
-        #009dff 6px,
-        #009dff 12px
-      );
-      border-radius: 5px;
-      border: 2px solid #fff;
-    }
-
-    /* ================= BALATRO MODAL OVERLAY (IMAGE 1 STYLE) ================= */
-    .balatro-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 25, 22, 0.72);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-    }
-
-    .balatro-modal-backdrop.open {
-      display: flex;
-    }
-
-    .balatro-modal {
-      width: 690px;
-      background: var(--modal-bg);
-      border: 4px solid #b8c4c8;
-      border-radius: 16px;
-      padding: 18px 24px;
-      box-shadow: 0 12px 0 rgba(0,0,0,0.55);
-    }
-
-    .modal-tabs {
+    .window-tabs {
       display: flex;
       justify-content: center;
-      gap: 14px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .modal-tab {
-      background: var(--btn-purple);
+    .tab-btn {
+      background: var(--accent-purple);
       border: none;
       border-radius: 8px;
-      padding: 8px 24px;
+      padding: 8px 18px;
       color: #fff;
       font-family: 'Silkscreen', monospace;
-      font-size: 15px;
+      font-size: 12px;
       cursor: pointer;
       box-shadow: 0 4px 0 #3f4294;
       text-shadow: 2px 2px 0 #000;
     }
 
-    .modal-inner {
-      background: #374247;
+    .tab-btn.active {
+      background: var(--accent-blue);
+      box-shadow: 0 4px 0 #005c99;
+    }
+
+    .window-inner {
+      flex: 1;
+      background: var(--slate-row);
       border-radius: 12px;
       padding: 14px 18px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 10px;
+      overflow-y: auto;
     }
 
-    .config-row {
+    .telemetry-row {
+      background: var(--slate-dark);
+      border-radius: 10px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border: 2px solid #526066;
     }
 
-    .config-label .c-title {
-      font-size: 14px;
+    .row-info .r-title {
+      font-size: 13px;
       text-shadow: 1px 1px 0 #000;
     }
 
-    .config-label .c-sub {
+    .row-info .r-sub {
       font-size: 10px;
       color: #b8c4c8;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
     }
 
-    .config-stepper {
+    .pill-control {
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .step-arrow {
-      background: var(--btn-red);
-      border: none;
+    .pill-side {
+      background: var(--accent-red);
       border-radius: 6px;
-      width: 30px;
-      height: 36px;
-      color: #fff;
-      font-family: 'Silkscreen', monospace;
-      font-weight: 700;
-      box-shadow: 0 3px 0 #9c2219;
-    }
-
-    .step-bar {
-      background: var(--btn-red);
-      border-radius: 8px;
-      width: 195px;
+      width: 28px;
       height: 36px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 13px;
       box-shadow: 0 3px 0 #9c2219;
     }
 
-    .modal-back-btn {
+    .pill-main {
+      background: var(--accent-red);
+      border-radius: 8px;
+      width: 230px;
+      height: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      box-shadow: 0 3px 0 #9c2219;
+      text-shadow: 1px 1px 0 #000;
+    }
+
+    .pill-main.green {
+      background: var(--accent-green);
+      box-shadow: 0 3px 0 #1b7943;
+    }
+
+    .pill-main.blue {
+      background: var(--accent-blue);
+      box-shadow: 0 3px 0 #005c99;
+    }
+
+    .check-badge {
+      background: var(--accent-red);
+      border: 3px solid #ffffff;
+      border-radius: 7px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 3px 0 #9c2219;
+    }
+
+    .window-footer-btn {
+      margin-top: 12px;
       width: 100%;
-      background: var(--btn-orange);
+      background: var(--accent-orange);
       border: none;
       border-radius: 10px;
-      padding: 10px;
+      padding: 11px;
       color: #fff;
       font-family: 'Silkscreen', monospace;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 5px 0 #9c5d0b;
@@ -748,330 +509,168 @@
 </head>
 <body>
 
-  <!-- LEFT HUD SIDEBAR -->
-  <aside class="hud-sidebar">
-    <div class="blind-box">
-      <div class="blind-header" id="blindTitle">Big Blind • PR #42</div>
-      <div class="blind-body">
-        <div class="blind-chip">BIG<br>BLIND</div>
-        <div class="blind-target">
-          <div class="label">Resolve at least</div>
-          <div class="score-req">✺ 6 DIFFS</div>
-          <div class="reward">Reward: $$$$$</div>
+  <!-- LEFT TELEMETRY SIDEBAR -->
+  <aside class="sidebar">
+    <div class="trigger-card">
+      <div class="trigger-header">UPSTREAM WEBHOOK</div>
+      <div class="trigger-body">
+        <div class="pr-badge">PR #42<br>V2 API</div>
+        <div class="trigger-meta">
+          <div class="lbl">payment-core-api</div>
+          <div class="val">6 BREAKING</div>
+          <div class="sub">2 Downstream Repos</div>
         </div>
       </div>
     </div>
 
-    <div class="round-score-box">
-      <div class="lbl">Purity<br>score</div>
-      <div class="val" id="roundScoreVal">✺ 1,719</div>
+    <div class="metric-strip">
+      <div class="lbl">Critic<br>Purity</div>
+      <div class="val" id="purityVal">1.00 PASS</div>
     </div>
 
-    <div class="hand-calc-box">
-      <div class="hand-name" id="handName">Topological Flush <span>lvl.2</span></div>
-      <div class="chips-mult-row">
-        <div class="chips-pill" id="chipsBox">140</div>
-        <div class="mult-x">X</div>
-        <div class="mult-pill" id="multBox">12</div>
+    <div class="engine-ratio-box">
+      <div class="engine-title" id="stageTitle">Self-Healing Loop <span>ITER 2</span></div>
+      <div class="dual-pills">
+        <div class="pill-blue" id="leftMetric">8 NODES</div>
+        <div class="pill-sep">×</div>
+        <div class="pill-red" id="rightMetric">0 ERR</div>
       </div>
     </div>
 
-    <div class="hud-grid">
-      <div class="hud-left-btns">
-        <button class="balatro-side-btn btn-run-info" onclick="toggleModal(true)">Run<br>Info</button>
-        <button class="balatro-side-btn btn-options" onclick="toggleModal(true)">Options</button>
+    <div class="sidebar-bottom-grid">
+      <div class="side-actions">
+        <button class="tactile-btn btn-coral" onclick="switchTab(2)">Self<br>Heal</button>
+        <button class="tactile-btn btn-amber" onclick="switchTab(3)">Pytest<br>Suite</button>
       </div>
-      <div class="hud-stats-col">
-        <div class="stat-pair">
-          <div class="stat-cell">
+      <div class="telemetry-cells">
+        <div class="cell-pair">
+          <div class="stat-box">
             <div class="s-lbl">Iters</div>
-            <div class="s-val blue-txt" id="handsVal">2</div>
+            <div class="s-val" style="color:var(--accent-blue);">2</div>
           </div>
-          <div class="stat-cell">
-            <div class="s-lbl">Rejects</div>
-            <div class="s-val red-txt" id="discardsVal">1</div>
+          <div class="stat-box">
+            <div class="s-lbl">Rejected</div>
+            <div class="s-val" style="color:var(--accent-red);">1</div>
           </div>
         </div>
-        <div class="money-cell" id="moneyVal">$5,000</div>
-        <div class="stat-pair">
-          <div class="stat-cell">
-            <div class="s-lbl">Repos</div>
-            <div class="s-val gold-txt">2<span style="font-size:12px;color:#fff">/2</span></div>
+        <div class="loc-banner">1,719 LOC</div>
+        <div class="cell-pair">
+          <div class="stat-box">
+            <div class="s-lbl">Tests</div>
+            <div class="s-val" style="color:var(--text-gold);">3/3</div>
           </div>
-          <div class="stat-cell">
-            <div class="s-lbl">PR #</div>
-            <div class="s-val gold-txt">42</div>
+          <div class="stat-box">
+            <div class="s-lbl">PRs</div>
+            <div class="s-val" style="color:var(--accent-green);">2</div>
           </div>
         </div>
       </div>
     </div>
   </aside>
 
-  <!-- MAIN GREEN FELT TABLE -->
-  <main class="table-area">
-    <!-- TOP JOKER & CONSUMABLE CARDS -->
-    <div class="top-cards-bar">
-      <div class="joker-tray">
-        <div class="joker-card">
-          <div class="joker-top"><span>JOKER</span><span>✦</span></div>
-          <div class="joker-art" style="background:#1877f2;">
-            <div class="icon">🧠</div>
-            <div>MUSE SPARK</div>
-          </div>
-          <div class="joker-badge">Baseten 2M TPM</div>
-        </div>
-        <div class="joker-card">
-          <div class="joker-top"><span>JOKER</span><span>⚡</span></div>
-          <div class="joker-art" style="background:#9c27b0;">
-            <div class="icon">🛠️</div>
-            <div>MUSE CODE</div>
-          </div>
-          <div class="joker-badge">Speculative AST</div>
-        </div>
-        <div class="joker-card">
-          <div class="joker-top"><span>JOKER</span><span>🕸️</span></div>
-          <div class="joker-art" style="background:#00897b;">
-            <div class="icon">🌳</div>
-            <div>GRAPHRAG</div>
-          </div>
-          <div class="joker-badge">Tree-sitter NX</div>
-        </div>
-        <div class="joker-card">
-          <div class="joker-top"><span>JOKER</span><span>🔍</span></div>
-          <div class="joker-art" style="background:#e53935;">
-            <div class="icon">📜</div>
-            <div>OASDIFF</div>
-          </div>
-          <div class="joker-badge">6 Breaking Rules</div>
-        </div>
-        <div class="joker-card">
-          <div class="joker-top"><span>JOKER</span><span>🛡️</span></div>
-          <div class="joker-art" style="background:#f39c12;">
-            <div class="icon">⚖️</div>
-            <div>CRITIC</div>
-          </div>
-          <div class="joker-badge">Purity 1.00</div>
-        </div>
-        <div class="tray-counter">5/5 Multi-Agent Jokers</div>
+  <!-- MAIN ENGINEERING WORKSPACE -->
+  <main class="workspace">
+    <!-- Top 5 Architecture Module Cards -->
+    <div class="top-modules-bar">
+      <div class="module-card">
+        <div class="m-head"><span>STAGE 1</span><span>DIFF</span></div>
+        <div class="m-Core" style="background:#e53935;">OASDIFF ENGINE</div>
+        <div class="m-foot">6 Breaking Rules</div>
       </div>
-
-      <div class="joker-tray">
-        <div class="joker-card">
-          <div class="joker-top"><span>SANDBOX</span><span>☁️</span></div>
-          <div class="joker-art" style="background:#2e7d32;">
-            <div class="icon">📦</div>
-            <div>MODAL.COM</div>
-          </div>
-          <div class="joker-badge">Ephemeral VM</div>
-        </div>
-        <div class="joker-card">
-          <div class="joker-top"><span>VERIFY</span><span>✓</span></div>
-          <div class="joker-art" style="background:#37474f;">
-            <div class="icon">🧪</div>
-            <div>MYPY+PYTEST</div>
-          </div>
-          <div class="joker-badge">3/3 Passed</div>
-        </div>
-        <div class="tray-counter">2/2 Verifiers</div>
+      <div class="module-card">
+        <div class="m-head"><span>STAGE 2</span><span>AST</span></div>
+        <div class="m-Core" style="background:#00897b;">HYBRID GRAPHRAG</div>
+        <div class="m-foot">Tree-sitter + NX</div>
+      </div>
+      <div class="module-card">
+        <div class="m-head"><span>STAGE 3</span><span>PLAN</span></div>
+        <div class="m-Core" style="background:#1877f2;">MUSE SPARK OPEN</div>
+        <div class="m-foot">Baseten 2M TPM</div>
+      </div>
+      <div class="module-card">
+        <div class="m-head"><span>STAGE 4</span><span>PATCH</span></div>
+        <div class="m-Core" style="background:#9c27b0;">MUSE CODE 34B</div>
+        <div class="m-foot">Fireworks Speculative</div>
+      </div>
+      <div class="module-card">
+        <div class="m-head"><span>STAGE 5</span><span>AUDIT</span></div>
+        <div class="m-Core" style="background:#2e7d32;">MODAL SANDBOX</div>
+        <div class="m-foot">Mypy + Pytest + Critic</div>
       </div>
     </div>
 
-    <!-- CENTER STAGE: TOPOLOGICAL AST HAND -->
-    <div class="center-stage">
-      <div class="stage-banner" id="stageBanner">
-        🃏 Topological Blast Radius Hand (DTO → Function → Unit Test) • Click "Play Hand" to Execute Self-Healing!
+    <!-- Main Slate Window -->
+    <div class="slate-window">
+      <div class="window-tabs">
+        <button class="tab-btn active" onclick="switchTab(0)">1. OpenAPI Diff</button>
+        <button class="tab-btn" onclick="switchTab(1)">2. GraphRAG Blast Radius</button>
+        <button class="tab-btn" onclick="switchTab(2)">3. Self-Healing Sandbox</button>
+        <button class="tab-btn" onclick="switchTab(3)">4. Pytest & Compliance</button>
       </div>
 
-      <div class="playing-hand" id="playingHand">
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">+35 Chips • DTO Updated</div>
-          <div class="card-corner suit-spade">A<br>♠</div>
-          <div class="card-center-node">
-            <span class="node-hop">1. DTO</span>
-            <div class="node-title">ChargePayload</div>
-            <div class="node-repo">checkout-worker</div>
-          </div>
-          <div class="card-corner suit-spade" style="align-self:flex-end;">♠</div>
-        </div>
+      <div class="window-inner" id="tabContent"></div>
 
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">+35 Chips • DTO Updated</div>
-          <div class="card-corner suit-heart">K<br>♥</div>
-          <div class="card-center-node">
-            <span class="node-hop">2. DTO</span>
-            <div class="node-title">ChargeResult</div>
-            <div class="node-repo">checkout-worker</div>
-          </div>
-          <div class="card-corner suit-heart" style="align-self:flex-end;">♥</div>
-        </div>
-
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">X2 Mult • Self-Healed Iter 2</div>
-          <div class="card-corner suit-diamond">Q<br>♦</div>
-          <div class="card-center-node">
-            <span class="node-hop" style="background:#fe4c40;">3. FUNC</span>
-            <div class="node-title">build_and_parse_charge</div>
-            <div class="node-repo">src/client.py</div>
-          </div>
-          <div class="card-corner suit-diamond" style="align-self:flex-end;">♦</div>
-        </div>
-
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">+50 Chips • Pytest PASS</div>
-          <div class="card-corner suit-club">J<br>♣</div>
-          <div class="card-center-node">
-            <span class="node-hop" style="background:#2ecc71;">4. TEST</span>
-            <div class="node-title">test_client.py</div>
-            <div class="node-repo">checkout-worker</div>
-          </div>
-          <div class="card-corner suit-club" style="align-self:flex-end;">♣</div>
-        </div>
-
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">+40 Chips • DTO Updated</div>
-          <div class="card-corner suit-spade">10<br>♠</div>
-          <div class="card-center-node">
-            <span class="node-hop">1. DTO</span>
-            <div class="node-title">SettlementEvent</div>
-            <div class="node-repo">billing-analytics</div>
-          </div>
-          <div class="card-corner suit-spade" style="align-self:flex-end;">♠</div>
-        </div>
-
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">X3 Mult • Hop-2 Caller</div>
-          <div class="card-corner suit-heart">9<br>♥</div>
-          <div class="card-center-node">
-            <span class="node-hop" style="background:#fe4c40;">2. FUNC</span>
-            <div class="node-title">calc_daily_settled</div>
-            <div class="node-repo">src/aggregator.py</div>
-          </div>
-          <div class="card-corner suit-heart" style="align-self:flex-end;">♥</div>
-        </div>
-
-        <div class="playing-card selected" onclick="this.classList.toggle('selected')">
-          <div class="score-popup">+50 Chips • Pytest PASS</div>
-          <div class="card-corner suit-diamond">8<br>♦</div>
-          <div class="card-center-node">
-            <span class="node-hop" style="background:#2ecc71;">3. TEST</span>
-            <div class="node-title">test_aggregator</div>
-            <div class="node-repo">billing-analytics</div>
-          </div>
-          <div class="card-corner suit-diamond" style="align-self:flex-end;">♦</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BOTTOM ACTION BUTTONS & DECK -->
-    <div class="bottom-controls">
-      <button class="action-btn btn-play" onclick="playSelfHealingHand()">Play Hand (Heal)</button>
-      <div class="sort-box">
-        <div class="s-title">Sort AST Hand</div>
-        <div class="sort-sub-btns">
-          <button class="sort-sub" onclick="scoreCardsWave()">Topo</button>
-          <button class="sort-sub" onclick="toggleModal(true)">Trace</button>
-        </div>
-      </div>
-      <button class="action-btn btn-discard" onclick="simulateIter1Fail()">Discard (Iter 1)</button>
-
-      <div class="deck-stack">
-        <div class="deck-card"><div class="deck-back"></div></div>
-        <div style="font-size:11px;margin-top:6px;">1,719/1,719 LOC</div>
-      </div>
+      <button class="window-footer-btn" onclick="nextTab()">
+        Next Pipeline Stage →
+      </button>
     </div>
   </main>
 
-  <!-- BALATRO CONFIG / SELF-HEALING DIAGNOSTIC MODAL (IMAGE 1 STYLE) -->
-  <div class="balatro-modal-backdrop" id="modalBackdrop">
-    <div class="balatro-modal">
-      <div class="modal-tabs">
-        <button class="modal-tab">Self-Heal Trace</button>
-        <button class="modal-tab">Config</button>
-      </div>
-
-      <div class="modal-inner">
-        <div class="config-row">
-          <div class="config-label">
-            <div class="c-title">Semantic Purity Score</div>
-            <div class="c-sub">Meta Muse Spark Open Critic Gate</div>
-          </div>
-          <div class="config-stepper">
-            <button class="step-arrow">&lt;</button>
-            <div class="step-bar">1.00 (100% Pure)<br>•••••••</div>
-            <button class="step-arrow">&gt;</button>
-          </div>
-        </div>
-
-        <div class="config-row">
-          <div class="config-label">
-            <div class="c-title">checkout-worker Sandbox</div>
-            <div class="c-sub">Iter 1 ('CHARGED' fail) → Iter 2 ('SETTLED' pass)</div>
-          </div>
-          <div class="config-stepper">
-            <button class="step-arrow">&lt;</button>
-            <div class="step-bar">2 Iterations<br>•••◦◦◦◦</div>
-            <button class="step-arrow">&gt;</button>
-          </div>
-        </div>
-
-        <div class="config-row">
-          <div class="config-label">
-            <div class="c-title">billing-analytics Sandbox</div>
-            <div class="c-sub">Multi-hop SettlementEventRecord refactored</div>
-          </div>
-          <div class="config-stepper">
-            <button class="step-arrow">&lt;</button>
-            <div class="step-bar">1 Iteration<br>•◦◦◦◦◦◦</div>
-            <button class="step-arrow">&gt;</button>
-          </div>
-        </div>
-
-        <div class="config-row">
-          <div class="config-label">
-            <div class="c-title">Mypy + Pytest + GitHub PRs</div>
-            <div class="c-sub">Ready-to-merge cross-repo Pull Requests opened</div>
-          </div>
-          <div style="background:#fe5f55;border:3px solid #fff;border-radius:6px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:20px;">✓</div>
-        </div>
-      </div>
-
-      <button class="modal-back-btn" onclick="toggleModal(false)">Back to Table</button>
-    </div>
-  </div>
-
   <script>
-    function toggleModal(show) {
-      document.getElementById('modalBackdrop').classList.toggle('open', show);
+    let currentTab = 0;
+    const tabsData = [
+      [
+        { title: "ChargeRequest.amount_cents", sub: "POST /v2/charges • Replaced by nested MonetaryValue object", val: "REMOVED [ERR]", cls: "" },
+        { title: "ChargeRequest.idempotency_key", sub: "POST /v2/charges • New mandatory deterministic token", val: "REQUIRED_ADDED", cls: "blue" },
+        { title: "ChargeResponse.net_amount_cents", sub: "POST /v2/charges • Replaced by ChargeResponse.monetary_value", val: "REMOVED [ERR]", cls: "" },
+        { title: "ChargeResponse.status", sub: "POST /v2/charges • Enum narrowed from ['CHARGED'] to ['SETTLED']", val: "ENUM_NARROWED", cls: "blue" },
+      ],
+      [
+        { title: "org/checkout-worker (Topological Order)", sub: "1. dto:ChargePayload -> 2. dto:ChargeResult -> 3. func:build_and_parse_charge -> 4. test_client", val: "4 AST Nodes", cls: "blue" },
+        { title: "org/billing-analytics (Multi-Hop Order)", sub: "1. dto:SettlementEventRecord -> 2. func:calculate_daily_settled_volume -> 3. test_aggregator", val: "4 AST Nodes", cls: "blue" },
+        { title: "Topological Sort Guarantee", sub: "DTO models refactored first, service functions second, unit tests last", val: "CHECK", cls: "check" },
+      ],
+      [
+        { title: "checkout-worker • Iteration 1", sub: "Line 25 in src/client.py still checks result.status == 'CHARGED' (pytest failed)", val: "REJECTED (0.45)", cls: "" },
+        { title: "checkout-worker • Iteration 2 (Self-Healed)", sub: "Muse Code replaced 'CHARGED' with 'SETTLED' • mypy=True, pytest=True", val: "APPROVED (1.00)", cls: "green" },
+        { title: "billing-analytics • Iteration 1", sub: "Multi-hop SettlementEventRecord & aggregator passed on first attempt", val: "APPROVED (1.00)", cls: "green" },
+        { title: "Automated Cross-Repo Pull Requests", sub: "PRs opened on org/checkout-worker & org/billing-analytics", val: "CHECK", cls: "check" },
+      ],
+      [
+        { title: "test_oasdiff_breaking_detects_compound_changes", sub: "tests/test_synchro_pipeline.py • Verifies deterministic OpenAPI diffing", val: "PASSED [33%]", cls: "green" },
+        { title: "test_graphrag_multi_hop_blast_radius_extraction", sub: "tests/test_synchro_pipeline.py • Verifies Tree-sitter + NetworkX topological order", val: "PASSED [66%]", cls: "green" },
+        { title: "test_self_validating_sandbox_loop_and_self_healing", sub: "tests/test_synchro_pipeline.py • Verifies Iter 1 fail -> Iter 2 heal", val: "PASSED [100%]", cls: "green" },
+        { title: "Hackathon Compliance Audit (Oct 27 - Nov 4)", sub: "0 pre-hackathon commits • 1,719 lines in hackathon_core_engine/", val: "CHECK", cls: "check" },
+      ]
+    ];
+
+    function switchTab(idx) {
+      currentTab = idx;
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+      const container = document.getElementById('tabContent');
+      container.innerHTML = tabsData[idx].map(r => `
+        <div class="telemetry-row">
+          <div class="row-info">
+            <div class="r-title">${r.title}</div>
+            <div class="r-sub">${r.sub}</div>
+          </div>
+          ${r.cls === 'check'
+            ? `<div class="check-badge">✓</div>`
+            : `<div class="pill-control">
+                 <div class="pill-side">&lt;</div>
+                 <div class="pill-main ${r.cls}">${r.val}<br>•••••••</div>
+                 <div class="pill-side">&gt;</div>
+               </div>`
+          }
+        </div>
+      `).join('');
     }
 
-    function simulateIter1Fail() {
-      document.getElementById('handName').innerHTML = 'Iter 1: Enum Mismatch <span>FAIL</span>';
-      document.getElementById('chipsBox').textContent = '45';
-      document.getElementById('multBox').textContent = '1';
-      document.getElementById('roundScoreVal').textContent = '✺ 45';
-      document.getElementById('StageBanner');
-      document.getElementById('stageBanner').textContent =
-        "❌ Iteration 1 Rejected by Critic: Line 25 in src/client.py still checks result.status == 'CHARGED'!";
+    function nextTab() {
+      switchTab((currentTab + 1) % 4);
     }
 
-    function scoreCardsWave() {
-      const cards = document.querySelectorAll('.playing-card');
-      cards.forEach((c, idx) => {
-        setTimeout(() => {
-          c.classList.add('scored');
-        }, idx * 140);
-      });
-    }
-
-    function playSelfHealingHand() {
-      scoreCardsWave();
-      document.getElementById('handName').innerHTML = 'Self-Healed Royal Flush <span>lvl.3</span>';
-      document.getElementById('chipsBox').textContent = '210';
-      document.getElementById('multBox').textContent = '16';
-      document.getElementById('roundScoreVal').textContent = '✺ 3,360';
-      document.getElementById('stageBanner').textContent =
-        "✅ Iteration 2 Approved! Both checkout-worker & billing-analytics passed mypy + pytest (Purity = 1.00)!";
-    }
+    switchTab(0);
   </script>
 </body>
 </html>
