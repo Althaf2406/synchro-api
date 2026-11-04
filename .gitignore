@@ -23,5 +23,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Local research PDFs (non-code)
+# Local research PDFs & rendered demo videos
 *.pdf
+*.mp4
